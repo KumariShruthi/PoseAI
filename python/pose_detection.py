@@ -1,13 +1,15 @@
 import cv2
 import mediapipe as mp
 
+# -----------------------------
 # MediaPipe setup
+# -----------------------------
+
 BaseOptions = mp.tasks.BaseOptions
 PoseLandmarker = mp.tasks.vision.PoseLandmarker
 PoseLandmarkerOptions = mp.tasks.vision.PoseLandmarkerOptions
 RunningMode = mp.tasks.vision.RunningMode
 
-# Pose model
 model_path = "pose_landmarker_full.task"
 
 options = PoseLandmarkerOptions(
@@ -19,7 +21,10 @@ options = PoseLandmarkerOptions(
     min_tracking_confidence=0.5
 )
 
+# -----------------------------
 # Open camera
+# -----------------------------
+
 cap = cv2.VideoCapture(0)
 
 with PoseLandmarker.create_from_options(options) as landmarker:
@@ -34,10 +39,14 @@ with PoseLandmarker.create_from_options(options) as landmarker:
             print("Camera not found")
             break
 
-        # OpenCV uses BGR, MediaPipe expects RGB
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # OpenCV: BGR
+        # MediaPipe: RGB
+        frame_rgb = cv2.cvtColor(
+            frame,
+            cv2.COLOR_BGR2RGB
+        )
 
-        # Convert to MediaPipe image
+        # Convert frame to MediaPipe image
         mp_image = mp.Image(
             image_format=mp.ImageFormat.SRGB,
             data=frame_rgb
@@ -49,16 +58,39 @@ with PoseLandmarker.create_from_options(options) as landmarker:
             frame_timestamp
         )
 
-        # Draw landmarks
+        # -----------------------------
+        # Process landmarks
+        # -----------------------------
+
         if result.pose_landmarks:
 
             for pose_landmarks in result.pose_landmarks:
 
-                # Draw points
+                print("\n--- Pose Detected ---")
+
+                # Print 33 landmark coordinates
+                for i, landmark in enumerate(pose_landmarks):
+
+                    print(
+                        i,
+                        "x:", round(landmark.x, 3),
+                        "y:", round(landmark.y, 3),
+                        "z:", round(landmark.z, 3)
+                    )
+
+                # -----------------------------
+                # Draw landmark points
+                # -----------------------------
+
                 for landmark in pose_landmarks:
 
-                    x = int(landmark.x * frame.shape[1])
-                    y = int(landmark.y * frame.shape[0])
+                    x = int(
+                        landmark.x * frame.shape[1]
+                    )
+
+                    y = int(
+                        landmark.y * frame.shape[0]
+                    )
 
                     cv2.circle(
                         frame,
@@ -68,29 +100,52 @@ with PoseLandmarker.create_from_options(options) as landmarker:
                         -1
                     )
 
-                # Draw connections
+                # -----------------------------
+                # Draw skeleton connections
+                # -----------------------------
+
                 connections = [
-                    (11, 12),
-                    (11, 13),
-                    (13, 15),
-                    (12, 14),
-                    (14, 16),
-                    (11, 23),
-                    (12, 24),
-                    (23, 24),
-                    (23, 25),
-                    (24, 26),
-                    (25, 27),
-                    (26, 28)
+                    (11, 12),  # shoulders
+
+                    (11, 13),  # left upper arm
+                    (13, 15),  # left forearm
+
+                    (12, 14),  # right upper arm
+                    (14, 16),  # right forearm
+
+                    (11, 23),  # left torso
+                    (12, 24),  # right torso
+
+                    (23, 24),  # hips
+
+                    (23, 25),  # left thigh
+                    (25, 27),  # left lower leg
+
+                    (24, 26),  # right thigh
+                    (26, 28)   # right lower leg
                 ]
 
                 for start, end in connections:
 
-                    x1 = int(pose_landmarks[start].x * frame.shape[1])
-                    y1 = int(pose_landmarks[start].y * frame.shape[0])
+                    x1 = int(
+                        pose_landmarks[start].x
+                        * frame.shape[1]
+                    )
 
-                    x2 = int(pose_landmarks[end].x * frame.shape[1])
-                    y2 = int(pose_landmarks[end].y * frame.shape[0])
+                    y1 = int(
+                        pose_landmarks[start].y
+                        * frame.shape[0]
+                    )
+
+                    x2 = int(
+                        pose_landmarks[end].x
+                        * frame.shape[1]
+                    )
+
+                    y2 = int(
+                        pose_landmarks[end].y
+                        * frame.shape[0]
+                    )
 
                     cv2.line(
                         frame,
@@ -100,13 +155,25 @@ with PoseLandmarker.create_from_options(options) as landmarker:
                         2
                     )
 
-        cv2.imshow("PoseAI - Pose Detection", frame)
+        # -----------------------------
+        # Show camera
+        # -----------------------------
 
+        cv2.imshow(
+            "PoseAI - Pose Detection",
+            frame
+        )
+
+        # Increase timestamp
         frame_timestamp += 33
 
         # Press Q to quit
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
+
+# -----------------------------
+# Release resources
+# -----------------------------
 
 cap.release()
 cv2.destroyAllWindows()

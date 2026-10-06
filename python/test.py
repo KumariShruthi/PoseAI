@@ -1,1 +1,0 @@
-print("PoseAI project started!")

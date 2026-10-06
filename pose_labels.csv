@@ -1,0 +1,46 @@
+image,category,pose_label
+"10,.jpg",sitting\single,sitting_relaxed
+10.jpg,sitting\single,hand_on_head_face
+3.jpg,sitting\single,sitting_relaxed
+4.jpg,sitting\single,hand_on_head_face
+"5,.jpg",sitting\single,hand_on_head_face
+5.jpg,sitting\single,sitting_relaxed
+"6,.jpg",sitting\single,sitting_relaxed
+6.jpg,sitting\single,hand_on_head_face
+"8,.jpg",sitting\single,hand_on_head_face
+8.jpg,sitting\single,hand_on_head_face
+"9,.jpg",sitting\single,sitting_relaxed
+9.jpg,sitting\single,sitting_relaxed
+i2.jpg,sitting\single,sitting_relaxed
+i3.jpg,sitting\single,sitting_relaxed
+img1.jpg,sitting\single,hand_on_head_face
+images (1).jpg,standing\single,dynamic_pose
+images.jpg,standing\single,hands_down
+img 11.jpg,standing\single,hands_down
+img 5.jpg,standing\single,hands_down
+img.jpg,standing\single,hand_on_head_face
+img1.jpg,standing\single,hands_down
+img10.jpg,standing\single,hands_down
+img11.jpg,standing\single,hands_down
+img12.jpg,standing\single,dynamic_pose
+img13.jpg,standing\single,hand_on_head_face
+img14.jpg,standing\single,hand_on_head_face
+img15.jpg,standing\single,hands_down
+img16.jpg,standing\single,dynamic_pose
+img17.jpg,standing\single,hand_on_head_face
+img18.jpg,standing\single,dynamic_pose
+img19.jpg,standing\single,hands_down
+img2.jpg,standing\single,hands_down
+img20.jpg,standing\single,hand_on_head_face
+img21.jpg,standing\single,dynamic_pose
+img3.jpg,standing\single,hand_on_head_face
+img5.jpg,standing\single,hand_on_head_face
+img8.jpg,standing\single,hands_down
+img9.jpg,standing\single,hands_down
+WhatsApp Image 2026-10-05 at 7.24.30 PM (1).jpeg,standing\single,hand_on_head_face
+WhatsApp Image 2026-10-05 at 7.24.31 PM.jpeg,standing\single,hands_down
+WhatsApp Image 2026-10-05 at 7.28.11 PM.jpeg,standing\single,hands_down
+WhatsApp Image 2026-10-05 at 7.28.19 PM.jpeg,standing\single,hand_on_head_face
+WhatsApp Image 2026-10-05 at 7.28.20 PM.jpeg,standing\single,hands_down
+WhatsApp Image 2026-10-05 at 7.28.21 PM.jpeg,standing\single,dynamic_pose
+img7.jpg,standing\single,dynamic_pose
